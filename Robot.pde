@@ -24,7 +24,8 @@ class Robot extends Enemy{
     }
   
     void update(){
-      x += speed;
+      int direction = (speed > 0) ? RIGHT : LEFT;
+      
       if(x >= width-w) {
       speed*=-1;
       }
@@ -32,26 +33,24 @@ class Robot extends Enemy{
       speed*=-1;
       }
       
-      boolean checkX;
-      if(speed>0 && player.x>x){
+      boolean checkX=false;
+      if(direction==RIGHT && player.x>x || direction==LEFT && player.x<x){
         checkX=true;
-      }else if(speed<0 && player.x<x){
-        checkX=true;
-      }
-      else{checkX=false;}
+      }else{checkX=false;}
       
 
-      boolean checkY;
-      if(player.y<=(y + w/2)+PLAYER_DETECT_RANGE_ROW 
-      && player.y>=(y + w/2)-PLAYER_DETECT_RANGE_ROW){
+      boolean checkY=false;
+      if(player.y<=y+(PLAYER_DETECT_RANGE_ROW*w) 
+      && player.y>=y-(PLAYER_DETECT_RANGE_ROW*w)){
         checkY=true;
       }else{checkY=false;}
     
       if(checkX==true && checkY==true){
-        laser.display();
+        speed=0;
+        x+=speed;
         
       }else{
-        
+        x += speed; 
       }
       
     }
