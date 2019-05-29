@@ -26,15 +26,22 @@ class Dinosaur extends Enemy{
     }
   
     void update(){
-      x += speed;
+      int direction = (speed > 0) ? RIGHT : LEFT;
+      float currentSpeed = speed;
+      
       if(x >= width-w) {
       speed*=-1;
       }
       if(x<=0){
       speed*=-1;
       }
+      if(direction==RIGHT && player.y==y && player.x>x || direction==LEFT && player.y==y && player.x<x){
+        currentSpeed *= TRIGGERED_SPEED_MULTIPLIER;
+        x+=currentSpeed;
+      }else{
+        x += speed;
+      }
       
-      float currentSpeed = speed;
     }
     
   
